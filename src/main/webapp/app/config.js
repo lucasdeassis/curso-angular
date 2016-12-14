@@ -15,9 +15,15 @@
         var stateCadastroCliente = {
             url: '/',
             templateUrl: 'app/views/cliente/cadastro-cliente.html',
+            // passa o parametro sem ser por url
             params: {
                 id: null
             }
+            //controller: 'cadastroClienteController',
+            // carrega o resolve antes e injeta o user no controller
+            //resolve: {
+             //   user: {/* busca no back end o usuario*/}
+            //}
         };
 
         var statePesquisaCliente = {

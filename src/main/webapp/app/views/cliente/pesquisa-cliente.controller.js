@@ -37,7 +37,10 @@
                 templateUrl: 'app/templates/bottom-sheet-list-template.html',
                 controller: 'GridClientesBottomSheetController',
                 controllerAs: 'bottomSheetCtrl'
-            }).then(function (clickedItem) {
+            }).then(
+                // quando se clica na bottomsheet, a promise eh chamada como success com a funcao 
+                // de clicked item
+                function (clickedItem) {
                 switch (clickedItem.action) {
                     case 'edit':
                         irParaCadastro(cliente);
@@ -46,7 +49,9 @@
                         ClienteResource.remove({ id: cliente.id }, listarClientes);
                         break;
                 }
-            }).finally(function () {
+            }) // finally observa o completamento da promise em sucesso ou rejeição 
+            // sem modificar o valor final
+            .finally(function () {
                 vm.clientesSelecionados = [];
             });
         }

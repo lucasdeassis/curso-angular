@@ -35,7 +35,7 @@
     <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
 
-    <!-- build:js app/source-home.min.js -->
+    <!-- build:js app/source-app.min.js -->
     <!-- Filtros -->
     <script src="app/filters/unsafe-filter.js"></script>
 
@@ -59,6 +59,10 @@
     <!-- Caso de uso Produto -->
     <script src="app/views/produto/cadastro-produto.controller.js"></script>
     <script src="app/views/produto/pesquisa-produto.controller.js"></script>
+
+    <!-- o grunt-bower-install gera os imports aqui embaixo -->
+    <!-- bower:js -->
+    <!-- endbower -->
 </head>
 
 <body data-ng-app="app" ng-controller="IndexController as indexCtrl" ng-cloak>

@@ -22,6 +22,7 @@
         function logar() {
             $http.post('/curso-angular/authc', null, {
                 headers: {
+                    //btoa codifica em base 64
                     'Authorization': 'Basic ' + $window.btoa(vm.user.login + ':' + vm.user.password)
                 }
             }).then(function () {

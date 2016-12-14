@@ -123,10 +123,27 @@
                 app: {
                     files: [{
                         expand: true,
-                        src: ['build/app/**/*.js'],
+                        src: ['build/app/**/*.js',
+                            'build/app/**/*.controller.js',
+                            'build/app/**/*.service.js'],
                         dest: '',
                         ext: '.min.js'
-                    }]
+                    },
+                    {
+                        expand: true,
+                        src: ['!build/app/**/*.js',
+                            'build/app/**/*.controller.js'],
+                        dest: '',
+                        ext: '.controller.min.js'
+                    },
+                    {
+                        expand: true,
+                        src: ['!build/app/**/*.js',
+                            'build/app/**/*.service.js'],
+                        dest: '',
+                        ext: '.service.min.js'
+                    }
+                    ]
                 }
             },
             cssmin: {
@@ -180,6 +197,26 @@
                     src: ['app/**/*.js'],
                     title: 'Senai Docs'
                 }
+            },
+            bowerInstall: {
+                target: {
+
+                    // Point to the files that should be updated when 
+                    // you run `grunt bower-install` 
+                    src: [
+                        'index.html'   // .html support... 
+                    ],
+
+                    // Optional: 
+                    // --------- 
+                    cwd: '',
+                    dependencies: true,
+                    devDependencies: false,
+                    exclude: [],
+                    fileTypes: {},
+                    ignorePath: '',
+                    overrides: {}
+                }
             }
         });
 
@@ -188,17 +225,29 @@
 
         // Tarefa de gerar o build
         grunt.registerTask('build', [
+            // limpa a pasta build
             'clean:build',
+            // copia os arquivos de app de bower_components para a pasta build
             'copy',
+            // concatena os arquivos de app js
             'concat:appJs',
+            // concatena os arquivos de login js
             'concat:loginJs',
+            // limpa os js de app menos os das views
             'clean:release',
+            // limpa pastas vazias de build
             'cleanempty',
+            // adiciona inject nas anotações ngAnnotate
             'ngAnnotate',
+            // processa os js no index de acordo com o comentario build js:
             'processhtml',
+            // minifica os js unificados
             'uglify',
+            // minifica o css
             'cssmin',
+            // minifica o html
             'htmlmin',
+            // remove os arquivos que não são minificados js min.js
             'clean:min'
         ]);
 
