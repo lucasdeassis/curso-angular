@@ -11,17 +11,16 @@ describe('PaginaClienteController', function() {
         { id: 2, nome: 'Ciclano' }
     ];
 	
-	beforeEach(inject(function(_$q_, _$rootScope_, _$state_, _growl_, _$mdBottomSheet_) {
+	beforeEach(inject(function(_$q_, _$rootScope_, _$state_, _growl_, _$mdBottomSheet_, _$controller_) {
 		$q = _$q_;
 		$rootScope = _$rootScope_;
 		$state = _$state_;
 		growl = _growl_;
-		$mdBottomSheet = $mdBottomSheet;
+		$mdBottomSheet = _$mdBottomSheet_;
+		$controller = _$controller_;
 	}));
 	
 	beforeEach(inject(function($injector) {
-		$mdBottomSheet = $injector.get('$mdBottomSheet');
-		
 		mockClienteResource = {
 			query: function() {
 			    queryDeferred = $q.defer();
@@ -29,20 +28,23 @@ describe('PaginaClienteController', function() {
 				var response = [];
 				response.$promise = queryDeferred.promise;
 				
-				queryDeferred.promise.then(function() {
-					response.push(mockClienteResourceResponse[0]);
-					response.push(mockClienteResourceResponse[1]);
+				queryDeferred.promise.then(function(listaClientes) {
+					for(var i=0, len = listaClientes.length; i < len; i ++){
+						response.push(listaClientes[i]);
+
+					}
+			    	
 				});
 				
-			    return response;
+				return response;
 			}
 	    };
 		
 		spyOn(mockClienteResource, 'query').and.callThrough();
 		
-		var $controller = $injector.get('$controller');
 		
 		createController = function() {
+			// escopo é pego do rootScope, com o $new criamos um novo escopo filho
 	    	$scope = $rootScope.$new();
 	    	return $controller('PesquisaClienteController', {
 	    		'$scope': $scope,
@@ -68,6 +70,6 @@ describe('PaginaClienteController', function() {
 		
 		$rootScope.$apply();
 		
-		expect(controller.clientes.length).toBe(2);
+		expect(controller.clientes.length).toBe(mockClienteResourceResponse.length);
 	}));
 });

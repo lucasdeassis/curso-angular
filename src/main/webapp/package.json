@@ -31,6 +31,7 @@
     "karma-ng-html2js-preprocessor": "^1.0.0"
   },
   "scripts": {
+    // quando rodamos 'npm test' ele executa o comando abaixo
     "test": "karma start karma.conf.js"
   },
   "author": "Cristiano Borges",
